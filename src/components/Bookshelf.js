@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Book from "./Book";
 
-export const Bookshelf = ({ title, friendlyTitle, books }) => {
-  console.log(books);
+export const Bookshelf = ({ friendlyTitle, books, onShelfChange }) => {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{friendlyTitle}</h2>
@@ -11,11 +10,7 @@ export const Bookshelf = ({ title, friendlyTitle, books }) => {
         <ol className="books-grid">
           {books.map((book) => (
             <li key={book.id}>
-              <Book
-                title={book.title}
-                authors={book.authors}
-                imageLink={book.imageLinks.thumbnail}
-              />
+              <Book book={book} onShelfChange={onShelfChange} />
             </li>
           ))}
         </ol>
@@ -25,9 +20,9 @@ export const Bookshelf = ({ title, friendlyTitle, books }) => {
 };
 
 Bookshelf.propTypes = {
-  title: PropTypes.string.isRequired,
   friendlyTitle: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default Bookshelf;

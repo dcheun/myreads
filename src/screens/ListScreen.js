@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import BookShelf from "../components/Bookshelf";
 
-export const ListScreen = ({ books }) => {
+export const ListScreen = ({ books, onShelfChange }) => {
   const currentlyReadingBooks = books.filter(
     (book) => book.shelf === "currentlyReading"
   );
@@ -17,16 +17,20 @@ export const ListScreen = ({ books }) => {
       <div className="list-books-content">
         <div>
           <BookShelf
-            title="currentlyReading"
             friendlyTitle="Currently Reading"
             books={currentlyReadingBooks}
+            onShelfChange={onShelfChange}
           />
           <BookShelf
-            title="wantToRead"
             friendlyTitle="Want To Read"
             books={wantToReadBooks}
+            onShelfChange={onShelfChange}
           />
-          <BookShelf title="read" friendlyTitle="Read" books={readBooks} />
+          <BookShelf
+            friendlyTitle="Read"
+            books={readBooks}
+            onShelfChange={onShelfChange}
+          />
         </div>
       </div>
       <div className="open-search">
@@ -40,6 +44,7 @@ export const ListScreen = ({ books }) => {
 
 ListScreen.propTypes = {
   books: PropTypes.array.isRequired,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default ListScreen;
