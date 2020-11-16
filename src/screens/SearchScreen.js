@@ -32,6 +32,7 @@ export class SearchScreen extends Component {
     const searchVal = e.target.value;
     this.setState({ searchVal });
     if (!searchVal) {
+      this.setState({ books: [] });
       return;
     }
     this.runSearch(searchVal);
