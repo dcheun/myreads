@@ -18,6 +18,9 @@ export class SearchScreen extends Component {
   runSearch = async (searchVal) => {
     try {
       const books = await search(searchVal);
+      // API appears to return object with error
+      // if there is an issue with the query.
+      // Otherwise an array of up to 20 book objects is returned.
       if (Array.isArray(books)) {
         this.setState({ books });
       } else {
@@ -32,12 +35,15 @@ export class SearchScreen extends Component {
     const searchVal = e.target.value;
     this.setState({ searchVal });
     if (!searchVal) {
+      // Clear search result if text in search field is cleared.
       this.setState({ books: [] });
       return;
     }
     this.runSearch(searchVal);
   };
 
+  // Searches for existing books in shelf.
+  // This is to help set the drop down list value accordingly.
   getShelf = (book) => {
     const { currBooks } = this.props;
     if (book.id in currBooks) {

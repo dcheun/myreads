@@ -9,11 +9,13 @@ export class Book extends React.Component {
   };
 
   state = {
+    // For keeping track and setting drop down list value.
     shelfName: "",
   };
 
   componentDidMount() {
     const { book, shelf } = this.props;
+    // Set the drop down list category accordingly.
     const shelfName = shelf ? shelf : book.shelf ? book.shelf : "none";
     this.setState({ shelfName });
   }

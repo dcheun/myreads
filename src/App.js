@@ -7,6 +7,10 @@ import SearchScreen from "./screens/SearchScreen";
 
 class BooksApp extends React.Component {
   state = {
+    // Books (key: value) are stored in form (id: Book).
+    // This makes searching if a Book is already in the shelf more
+    // straightforward in SearchScreen.
+    // Note that it is passed as an array to ListScreen.
     books: {},
   };
 
@@ -21,18 +25,26 @@ class BooksApp extends React.Component {
   };
 
   componentDidMount() {
+    // Do initial retrieve of all books on shelf after
+    // component first mounted.
     this.retrieveBooks();
   }
 
+  // Callback passed to child components for updating books on shelves.
   onShelfChange = async (book, shelf) => {
     try {
+      // Call update book, then retrieve the book again to get
+      // the updated shelf field on the object.
       await BooksAPI.update(book, shelf);
       const updatedBook = await BooksAPI.get(book.id);
 
+      // Call set state to re-render and update UI.
       this.setState((prevState) => ({
         books: { ...prevState.books, [updatedBook.id]: updatedBook },
       }));
 
+      // Display an alert to user to confirm the action performed.
+      // This is more useful in the search screen.
       let msg = "";
       if (shelf === "none") {
         msg = `Book "${book.title}" has been removed from bookshelf`;
