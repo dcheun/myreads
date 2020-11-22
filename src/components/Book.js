@@ -16,7 +16,7 @@ export class Book extends React.Component {
   componentDidMount() {
     const { book, shelf } = this.props;
     // Set the drop down list category accordingly.
-    const shelfName = shelf ? shelf : book.shelf ? book.shelf : "none";
+    const shelfName = shelf || book.shelf || "none";
     this.setState({ shelfName });
   }
 
@@ -58,9 +58,7 @@ export class Book extends React.Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">
-          {book.authors ? book.authors.join(", ") : ""}
-        </div>
+        <div className="book-authors">{book.authors?.join(", ") ?? ""}</div>
       </div>
     );
   }

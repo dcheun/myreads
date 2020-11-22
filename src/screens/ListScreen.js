@@ -4,33 +4,35 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import BookShelf from "../components/Bookshelf";
 
-export const ListScreen = ({ books, onShelfChange }) => {
-  const currentlyReadingBooks = books.filter(
-    (book) => book.shelf === "currentlyReading"
-  );
-  const wantToReadBooks = books.filter((book) => book.shelf === "wantToRead");
-  const readBooks = books.filter((book) => book.shelf === "read");
+const SHELVES = [
+  {
+    title: "Currently Reading",
+    id: "currentlyReading",
+  },
+  {
+    title: "Want To Read",
+    id: "wantToRead",
+  },
+  {
+    title: "Read",
+    id: "read",
+  },
+];
 
+export const ListScreen = ({ books, onShelfChange }) => {
   return (
     <div className="list-books">
       <Header />
       <div className="list-books-content">
         <div>
-          <BookShelf
-            friendlyTitle="Currently Reading"
-            books={currentlyReadingBooks}
-            onShelfChange={onShelfChange}
-          />
-          <BookShelf
-            friendlyTitle="Want To Read"
-            books={wantToReadBooks}
-            onShelfChange={onShelfChange}
-          />
-          <BookShelf
-            friendlyTitle="Read"
-            books={readBooks}
-            onShelfChange={onShelfChange}
-          />
+          {SHELVES.map((shelf) => (
+            <BookShelf
+              key={shelf.id}
+              friendlyTitle={shelf.title}
+              onShelfChange={onShelfChange}
+              books={books.filter((book) => book.shelf === shelf.id)}
+            />
+          ))}
         </div>
       </div>
       <div className="open-search">

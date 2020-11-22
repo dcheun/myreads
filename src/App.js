@@ -71,16 +71,12 @@ class BooksApp extends React.Component {
             />
           )}
         />
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <ListScreen
-              books={Object.values(books)}
-              onShelfChange={this.onShelfChange}
-            />
-          )}
-        />
+        <Route exact path="/">
+          <ListScreen
+            books={Object.values(books)}
+            onShelfChange={this.onShelfChange}
+          />
+        </Route>
       </div>
     );
   }
